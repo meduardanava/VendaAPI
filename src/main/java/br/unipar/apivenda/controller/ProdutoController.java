@@ -15,15 +15,22 @@ public class ProdutoController {
 
     @GET
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Response listarProduto() {
-        return Response.ok(produtoService.listar()).build();
+    @Path("/{id}")
+    public Response listarProdutoPorID(@PathParam("id") Integer id) {
+
+        Produto produto = produtoService.buscarPorID(id);
+
+        if (produto == null)
+            return Response.status(204).entity("Produto não encontrado").build();
+
+        return Response.ok(produtoService.buscarPorID(id)).build();
     }
 
     @POST
-    @Consumes(value = MediaType.APPLICATION_JSON)
-    @Produces(value = MediaType.APPLICATION_JSON)
-    public Response cadastrarProduto(Produto produto) {
+    @Path("/{id}")
+    public Response cadastrarProduto(@PathParam("id") Integer id) {
         try {
+            Produto produto = produtoService.buscarPorID(id);
             produtoService.cadastrar(produto);
             return Response.status(201).entity("Produto cadastrado com sucesso").build();
         } catch (Exception ex) {
@@ -31,11 +38,11 @@ public class ProdutoController {
         }
     }
 
-    @POST
-    @Consumes(value = MediaType.APPLICATION_JSON)
-    @Produces(value = MediaType.APPLICATION_JSON)
-    public Response editarproduto(Produto produto) {
+    @PUT
+    @Path("/{id}")
+    public Response editarProduto(@PathParam("id") Integer id) {
         try {
+            Produto produto = produtoService.buscarPorID(id);
             produtoService.editar(produto);
             return Response.status(201).entity("Produto editado com sucesso").build();
         } catch (Exception ex) {
@@ -45,7 +52,7 @@ public class ProdutoController {
 
     @DELETE
     @Path("/{id}")
-    public Response excluirproduto(@PathParam("id") Integer id) {
+    public Response excluirProduto(@PathParam("id") Integer id) {
         try {
             Produto produto = produtoService.buscarPorID(id);
             produtoService.excluir(produto);

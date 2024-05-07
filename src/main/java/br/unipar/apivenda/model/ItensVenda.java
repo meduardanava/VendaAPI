@@ -1,5 +1,6 @@
 package br.unipar.apivenda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class ItensVenda implements Serializable {
     private Produto produto;
 
     @ManyToOne
+    @JsonIgnore
     private Venda venda;
 
 }

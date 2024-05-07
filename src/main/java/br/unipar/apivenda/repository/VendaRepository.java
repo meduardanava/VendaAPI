@@ -5,6 +5,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Stateless
@@ -44,6 +45,20 @@ public class VendaRepository {
         } catch (Exception ex) {
             throw new Exception("A venda não pôde ser excluída");
         }
+    }
+
+    public BigDecimal obterValorTotalVendaPorCliente(Integer idCliente) {
+        String jpql = "SELECT SUM(v.total) FROM Venda v WHERE " +
+                "v.cliente.id = :idCliente";
+        return em.createQuery(jpql, BigDecimal.class).setParameter("idCliente", idCliente)
+                .getSingleResult();
+    }
+
+    public int obterQuantidadeVendaPorCliente(Integer idCliente) {
+        String jpql = "SELECT CONT(v) FROM Venda v WHERE " +
+                "v.cliente.id = :idCliente";
+        return em.createQuery(jpql, Long.class).setParameter("idCliente", idCliente)
+                .getSingleResult().intValue();
     }
 
 }

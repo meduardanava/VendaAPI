@@ -38,4 +38,8 @@ public class VendaService {
     public void excluir(Venda venda) throws Exception {
         vendaRepository.excluir(venda);
     }
+
+    public int obterQuantidadeVendaPorCliente(Integer idCliente) {
+        return vendaRepository.obterQuantidadeVendaPorCliente(idCliente);
+    }
 }
