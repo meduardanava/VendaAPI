@@ -27,10 +27,10 @@ public class ProdutoController {
     }
 
     @POST
-    @Path("/{id}")
-    public Response cadastrarProduto(@PathParam("id") Integer id) {
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response cadastrarProduto(Produto produto) {
         try {
-            Produto produto = produtoService.buscarPorID(id);
             produtoService.cadastrar(produto);
             return Response.status(201).entity("Produto cadastrado com sucesso").build();
         } catch (Exception ex) {

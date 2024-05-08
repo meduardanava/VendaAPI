@@ -28,10 +28,10 @@ public class ClienteController {
     }
 
     @POST
-    @Path("/{id}")
-    public Response cadastrarCliente(@PathParam("id") Integer id) {
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response cadastrarCliente(Cliente cliente) {
         try {
-            Cliente cliente = clienteService.buscarPorID(id);
             clienteService.cadastrar(cliente);
             return Response.status(201).entity("Cliente cadastrado com sucesso").build();
         } catch (Exception ex) {

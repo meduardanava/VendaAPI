@@ -36,10 +36,10 @@ public class VendaController {
     }
 
     @POST
-    @Path("/{id}")
-    public Response cadastrarVenda(@PathParam("id") Integer id) {
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response cadastrarVenda(Venda venda) {
         try {
-            Venda venda = vendaService.buscarPorID(id);
             vendaService.cadastrar(venda);
             return Response.status(201).entity("Venda cadastrada com sucesso").build();
         } catch (Exception ex) {
